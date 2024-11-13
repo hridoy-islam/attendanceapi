@@ -23,7 +23,7 @@ const userSchema = new Schema<TUser, UserModel>(
     },
     role: {
       type: String,
-      enum: ["user", "admin", "company", "creator", "director"],
+      enum: ["user", "admin"],
       default: "user",
     },
     status: {
@@ -31,16 +31,6 @@ const userSchema = new Schema<TUser, UserModel>(
       enum: UserStatus,
       default: "active",
     },
-    company: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-    colleagues: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
     isDeleted: {
       type: Boolean,
       default: false,
@@ -49,7 +39,10 @@ const userSchema = new Schema<TUser, UserModel>(
       type: Boolean,
       default: false,
     },
-    address: {
+    phone: {
+      type: String,
+    },
+    ipaddress: {
       type: String,
     }
   },

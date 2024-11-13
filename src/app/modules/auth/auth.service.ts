@@ -8,7 +8,7 @@ import config from "../../config";
 import { createToken } from "./auth.utils";
 import { sendEmail } from "../../utils/sendEmail";
 
-const checkLogin = async (payload: TLogin) => {
+const checkLogin = async (payload: TLogin, ipaddress: string) => {
   try {
     const foundUser = await User.isUserExists(payload.email);
     if (!foundUser) {
@@ -21,8 +21,18 @@ const checkLogin = async (payload: TLogin) => {
       );
     }
 
-    if (!(await User.isPasswordMatched(payload?.password, foundUser?.password)))
-      throw new AppError(httpStatus.FORBIDDEN, "Password do not matched");
+    if (!(await User.isPasswordMatched(payload.password, foundUser.password))) {
+      throw new AppError(httpStatus.FORBIDDEN, "Password does not match");
+    }
+
+
+    // Check IP only if user is not an admin
+    if (foundUser.role !== "admin") {
+      if (foundUser.ipaddress !== ipaddress) {
+        throw new AppError(httpStatus.FORBIDDEN, "IP address mismatch");
+      }
+    }
+
 
     const accessToken = jwt.sign(
       {
@@ -38,7 +48,7 @@ const checkLogin = async (payload: TLogin) => {
     );
 
     return {
-      accessToken,
+      accessToken
     };
   } catch (error) {
     throw new AppError(httpStatus.NOT_FOUND, "Details doesnt match");

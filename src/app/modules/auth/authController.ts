@@ -4,7 +4,8 @@ import sendResponse from "../../utils/sendResponse";
 import { AuthServices } from "./auth.service";
 
 const login = catchAsync(async (req, res) => {
-  const result = await AuthServices.checkLogin(req.body);
+  const ipaddress = req.ip;
+  const result = await AuthServices.checkLogin(req.body, ipaddress as string);
   const { accessToken } = result;
 
   // res.cookie('refreshToken', refreshToken, {
@@ -17,6 +18,7 @@ const login = catchAsync(async (req, res) => {
     message: "Logged In Successfully",
     data: {
       accessToken,
+      ipaddress
     },
   });
 });

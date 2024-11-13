@@ -35,32 +35,10 @@ const updateUser = catchAsync(async (req, res) => {
   });
 });
 
-const getCompanyUser = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-  const result = await UserServices.getAllUserByCompany(userId);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "All Users Fetched Successfully",
-    data: result,
-  });
-});
 
-const assignUser = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const result = await UserServices.assignUserToDB(id, req.body);
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Colleagues Updated Successfully",
-    data: result,
-  });
-});
 
 export const UserControllers = {
   getAllUser,
   getSingleUser,
   updateUser,
-  getCompanyUser,
-  assignUser
 };
