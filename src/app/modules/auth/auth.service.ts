@@ -26,12 +26,12 @@ const checkLogin = async (payload: TLogin, ipaddress: string) => {
     }
 
 
-    // Check IP only if user is not an admin
-    if (foundUser.role !== "admin") {
-      if (foundUser.ipaddress !== ipaddress) {
-        throw new AppError(httpStatus.FORBIDDEN, "IP address mismatch");
-      }
-    }
+    // // Check IP only if user is not an admin
+    // if (foundUser.role !== "admin") {
+    //   if (foundUser.ipaddress !== ipaddress) {
+    //     throw new AppError(httpStatus.FORBIDDEN, "IP address mismatch");
+    //   }
+    // }
 
 
     const accessToken = jwt.sign(
