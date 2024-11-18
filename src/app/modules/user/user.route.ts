@@ -6,18 +6,18 @@ import auth from "../../middlewares/auth";
 const router = express.Router();
 router.get(
   "/",
-  auth("admin"),
+  auth("admin", "user"),
   UserControllers.getAllUser
 );
 router.get(
   "/:id",
- auth("admin"),
+ auth("admin", "user"),
   UserControllers.getSingleUser
 );
 
 router.patch(
   "/:id",
-  auth("admin"),
+  auth("admin", "user"),
   UserControllers.updateUser
 );
 
